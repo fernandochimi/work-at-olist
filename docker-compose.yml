@@ -3,7 +3,7 @@ version: '3'
 services:
   db:
     image: postgres
-    restart: always
+    restart: on-failure
     ports:
       - "5432:5432"
     environment:
@@ -11,9 +11,31 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
 
+  # migrate:
+  #   # restart: on-failure
+  #   image: work-at-olist_authors
+  #   working_dir: /work-at-olist/src
+  #   command: python src/manage.py migrate --noinput --settings=settings.dev
+  #   volumes:
+  #     - .:/work-at-olist
+  #   env_file: config/api.env
+  #   depends_on:
+  #     - db
+
+  # tests:
+  #   image: test_authors
+  #   command: python -m unittest discover -s src -v
+  #   # command: sh -c "coverage run --omit="**migrations**,**tests**" -m unittest discover -s src -v && coverage report"
+  #   volumes:
+  #     - .:/work-at-olist
+  #   env_file: config/api.env
+  #   depends_on:
+  #     - db
+    
+
   authors:
     build: .
-    restart: always
+    restart: on-failure
     command: python src/manage.py runserver 0.0.0.0:8000 --settings=settings.dev
     volumes:
       - .:/work-at-olist
@@ -22,3 +44,5 @@ services:
     env_file: config/api.env
     depends_on:
       - db
+      # - migrate
+    #   - tests
