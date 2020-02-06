@@ -16,6 +16,9 @@ makemigrations:
 migrate:
 	 	${DCMP} run authors python src/manage.py migrate --settings=settings.dev
 
+import_authors:
+	 	${DCMP} run authors python src/manage.py runscript import_authors --settings=settings.dev
+
 test:
 		${DCMP} run authors coverage run --source='./src/' src/manage.py test --settings=settings.dev
 
@@ -25,6 +28,9 @@ start:
 startd:
 		${DCMP} up -d
 
+prune:
+		docker container prune -f
+
 stoppsql:
 		sudo service postgresql stop
 
@@ -32,11 +38,11 @@ stop:
 		${DCMP} stop
 
 execute:
-# 		sudo chown -R $(USER):$(USER) .
-		# ${MAKE} stoppsql
 		${MAKE} clean
 		${MAKE} build
 		${MAKE} makemigrations
 		${MAKE} migrate
+		${MAKE} import_authors
 		${MAKE} test
 		${MAKE} startd
+		${MAKE} prune
