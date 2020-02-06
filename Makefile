@@ -10,6 +10,15 @@ clean:
 build:
 		${DCMP} build
 
+makemigrations:
+	 	${DCMP} run authors python src/manage.py makemigrations --settings=settings.dev
+
+migrate:
+	 	${DCMP} run authors python src/manage.py migrate --settings=settings.dev
+
+test:
+		${DCMP} run authors coverage run --source='./src/' src/manage.py test --settings=settings.dev
+
 start:
 		${DCMP} up
 
@@ -27,4 +36,7 @@ execute:
 		# ${MAKE} stoppsql
 		${MAKE} clean
 		${MAKE} build
+		${MAKE} makemigrations
+		${MAKE} migrate
+		${MAKE} test
 		${MAKE} startd
