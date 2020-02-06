@@ -1,12 +1,11 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework.generics import ListAPIView
+from rest_framework.pagination import PageNumberPagination
 
 from authors.models import Author
 from authors.serializers import AuthorSerializer
 
 
-class AuthorList(APIView):
-    def get(self, request):
-        authors = Author.objects.all()
-        author_serializer = AuthorSerializer(authors, many=True)
-        return Response(author_serializer.data)
+class AuthorListView(ListAPIView):
+    pagination_class = PageNumberPagination
+    serializer_class = AuthorSerializer
+    queryset = Author.objects.all()

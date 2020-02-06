@@ -21,7 +21,7 @@ from authors import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('authors/', views.AuthorList.as_view()),
+    path('authors/', views.AuthorListView.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
