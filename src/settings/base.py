@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'rest_framework',
 
-    'authors.apps.AuthorsConfig'
+    'authors.apps.AuthorsConfig',
+    'books.apps.BooksConfig'
 ]
 
 MIDDLEWARE = [

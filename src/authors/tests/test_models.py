@@ -10,7 +10,7 @@ class AuthorModelsTest(TestCase):
 
     def test_01_unicode(self):
         "Author name must be a unicode"
-        self.assertEqual(str(self.author), u"{0}".format(self.author.name))
+        self.assertEqual(str(self.author), u"{}".format(self.author.name))
 
     def test_02_author_table(self):
         "Authors table must be required one register"
