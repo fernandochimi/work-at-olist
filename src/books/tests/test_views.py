@@ -15,7 +15,12 @@ class BookViewTest(APITestCase):
 
     def test_02_filter_books(self):
         "Books data must be filtered"
-        response = self.client.get(self.list_url, {'name': 'book'},
-                                   format='json')
+        response = self.client.get(
+            self.list_url,
+            {
+                'name': 'book',
+                'authors': 'author'
+            },
+            format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(len(response.data) > 0)

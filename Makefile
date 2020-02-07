@@ -20,7 +20,7 @@ import_authors:
 	 	${DCMP} run authors python src/manage.py runscript import_authors --script-args 'config/authors.csv' --settings=settings.dev
 
 test:
-		${DCMP} run authors coverage run --omit="**migrations**,**tests**" --source='./src/authors' src/manage.py test --settings=settings.dev
+		${DCMP} run authors coverage run --omit="**migrations**,**tests**" --source='./src/authors,./src/books' src/manage.py test --settings=settings.dev
 
 report:
 		${DCMP} run authors coverage report -m
