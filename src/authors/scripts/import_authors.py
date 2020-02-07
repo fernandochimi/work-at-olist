@@ -3,9 +3,9 @@ import csv
 from authors.models import Author
 
 
-def run():
+def run(file):
     try:
-        file = open('config/authors.csv')
+        file = open(file)
         reader = csv.DictReader(file)
 
         Author.objects.all().delete()
@@ -14,4 +14,4 @@ def run():
             author, created = Author.objects.get_or_create(name=row['name'])
         return "Import data with success"
     except Exception as e:
-        return e
+        raise e
