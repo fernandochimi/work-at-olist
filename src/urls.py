@@ -23,7 +23,7 @@ from books import views as books_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('authors/', authors_views.AuthorListView.as_view(), name='authors'),
-    path('books/', books_views.BookListView.as_view(), name='book-list'),
+    path('books/', books_views.BookListView.as_view(), name='books'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

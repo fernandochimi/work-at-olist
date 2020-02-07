@@ -2,7 +2,7 @@ from rest_framework.generics import ListCreateAPIView
 from rest_framework.pagination import PageNumberPagination
 
 from books.models import Book
-from books.serializers import BookSerializer
+from books.serializers import BookSerializer, BookCreateSerializer
 
 
 class BookListView(ListCreateAPIView):
@@ -24,3 +24,8 @@ class BookListView(ListCreateAPIView):
         if query_params is not None and len(query_params) > 0:
             queryset = self.filter_results(query_params, queryset)
         return queryset
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return BookCreateSerializer
+        return BookSerializer
