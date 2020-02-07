@@ -15,7 +15,7 @@ class BookListView(ListCreateAPIView):
         if name is not None:
             queryset = queryset.filter(name__contains=name)
         if authors is not None:
-            queryset = queryset.filter(authors__name__contains=name)
+            queryset = queryset.filter(authors__name__contains=authors)
         return queryset
 
     def get_queryset(self):
