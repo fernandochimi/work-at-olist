@@ -4,7 +4,7 @@ from authors.models import Author
 from authors.tests.factories import AuthorFactory
 
 
-class AuthorTest(TestCase):
+class AuthorModelsTest(TestCase):
     def setUp(self):
         self.author = AuthorFactory()
 
