@@ -10,9 +10,6 @@ clean:
 build:
 		${DCMP} build
 
-makemigrations:
-	 	${DCMP} run authors python src/manage.py makemigrations --settings=settings.dev
-
 migrate:
 	 	${DCMP} run authors python src/manage.py migrate --settings=settings.dev
 
@@ -31,6 +28,12 @@ start:
 startd:
 		${DCMP} up -d
 
+createsuperuser:
+		${DCMP} run authors python src/manage.py createsuperuser --username user --email user@example.com --no-input --settings=settings.dev
+
+token:
+		${DCMP} run authors python src/manage.py drf_create_token user --settings=settings.dev
+
 prune:
 		docker container prune -f
 
@@ -43,10 +46,11 @@ stop:
 execute:
 		${MAKE} clean
 		${MAKE} build
-		${MAKE} makemigrations
 		${MAKE} migrate
 		${MAKE} import_authors
 		${MAKE} test
 		${MAKE} report
 		${MAKE} startd
+		${MAKE} createsuperuser
+		${MAKE} token
 		${MAKE} prune

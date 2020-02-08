@@ -1,6 +1,8 @@
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, APIClient
+from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import User
 
 from authors.tests.factories import AuthorFactory
 from books.tests.factories import BookFactory
@@ -8,8 +10,14 @@ from books.tests.factories import BookFactory
 
 class BookViewTest(APITestCase):
     def setUp(self):
+        self.client = APIClient()
         self.authors_factory = AuthorFactory()
         self.book = BookFactory(authors=[self.authors_factory])
+        self.user = User.objects.create_superuser(
+            'admin', 'admin@admin.com', 'admin123')
+        self.token = Token.objects.create(user=self.user)
+        self.token.save()
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
 
     def test_01_list_books(self):
         "Books data must be listed"
