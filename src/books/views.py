@@ -1,6 +1,7 @@
 from rest_framework.generics import ListCreateAPIView, \
     RetrieveUpdateDestroyAPIView
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
 
 from books.models import Book
 from books.serializers import BookSerializer, \
@@ -10,6 +11,7 @@ from books.serializers import BookSerializer, \
 class BookListView(ListCreateAPIView):
     pagination_class = PageNumberPagination
     serializer_class = BookSerializer
+    permission_classes = (IsAuthenticated,)
 
     def filter_results(self, params, queryset):
         name = params.get('name', None)
@@ -48,4 +50,5 @@ class BookListView(ListCreateAPIView):
 class BookDetailView(RetrieveUpdateDestroyAPIView):
     pagination_class = PageNumberPagination
     serializer_class = BookSerializer
+    permission_classes = (IsAuthenticated,)
     queryset = Book.objects.all()

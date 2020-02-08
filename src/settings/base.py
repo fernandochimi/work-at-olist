@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'django_extensions',
     'rest_framework',
+    'rest_framework.authtoken',
 
     'authors.apps.AuthorsConfig',
     'books.apps.BooksConfig'
@@ -78,6 +79,9 @@ WSGI_APPLICATION = 'wsgi.application'
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': [
         'rest_framework.pagination.PageNumberPagination'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
     ],
     'PAGE_SIZE': 4
 }

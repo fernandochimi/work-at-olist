@@ -28,6 +28,7 @@ class BookSerializer(serializers.ModelSerializer):
                 author = author_queryset.first()
             else:
                 raise Http404
+            instance.authors.clear()
             instance.authors.add(author)
 
         instance.save()

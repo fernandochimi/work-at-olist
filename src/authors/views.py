@@ -1,5 +1,6 @@
 from rest_framework.generics import ListAPIView
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
 
 from authors.models import Author
 from authors.serializers import AuthorSerializer
@@ -8,6 +9,7 @@ from authors.serializers import AuthorSerializer
 class AuthorListView(ListAPIView):
     pagination_class = PageNumberPagination
     serializer_class = AuthorSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         queryset = Author.objects.all()
