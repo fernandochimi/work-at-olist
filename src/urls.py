@@ -24,6 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('authors/', authors_views.AuthorListView.as_view(), name='authors'),
     path('books/', books_views.BookListView.as_view(), name='books'),
+    path('books/<int:pk>/',
+         books_views.BookDetailView.as_view(), name='books-detail'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

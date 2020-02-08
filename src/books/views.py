@@ -1,8 +1,10 @@
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, \
+    RetrieveUpdateDestroyAPIView
 from rest_framework.pagination import PageNumberPagination
 
 from books.models import Book
-from books.serializers import BookSerializer, BookCreateSerializer
+from books.serializers import BookSerializer, \
+    BookCreateSerializer
 
 
 class BookListView(ListCreateAPIView):
@@ -11,11 +13,23 @@ class BookListView(ListCreateAPIView):
 
     def filter_results(self, params, queryset):
         name = params.get('name', None)
+        edition = params.get('edition', None)
+        publication_year = params.get('publication_year', None)
         authors = params.get('authors', None)
+
         if name is not None:
             queryset = queryset.filter(name__contains=name)
+
+        if edition is not None:
+            queryset = queryset.filter(edition__contains=edition)
+
+        if publication_year is not None:
+            queryset = queryset.filter(
+                publication_year__contains=publication_year)
+
         if authors is not None:
             queryset = queryset.filter(authors__name__contains=authors)
+
         return queryset
 
     def get_queryset(self):
@@ -29,3 +43,9 @@ class BookListView(ListCreateAPIView):
         if self.request.method == 'POST':
             return BookCreateSerializer
         return BookSerializer
+
+
+class BookDetailView(RetrieveUpdateDestroyAPIView):
+    pagination_class = PageNumberPagination
+    serializer_class = BookSerializer
+    queryset = Book.objects.all()
