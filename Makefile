@@ -37,9 +37,6 @@ token:
 prune:
 		docker container prune -f
 
-stoppsql:
-		sudo service postgresql stop
-
 stop:
 		${DCMP} stop
 
